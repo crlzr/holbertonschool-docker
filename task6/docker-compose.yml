@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  front-end:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    image: nginx
+    depends_on:
+      - back-end
+
+  back-end:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    image: backend-api # name for the image you're building
+
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    image: proxy
+    ports:
+    - '80:80'
+    depends_on:
+      - back-end
+      - front-end
